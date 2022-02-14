@@ -18,16 +18,49 @@ def sumarLlista(llista):
         i += 1
     return suma
 
-def mitjanaLlista (suma, n):
-    return suma/n
+def mitjanaLlista (llista, n):
+    return sumarLlista(llista)/n
 
+def minim (llista):
+    min = llista[0]
+    i = 0
+    while i < len(llista):
+        if min > llista[i]:
+            min = llista[i]
+        i += 1
+    return min
 
-print("Aquest programa generarà una llista de n nombre aleatoris i calcularà la seva suma, mitjana, valor màxim i el valor mínim\n"
-      "Introdueix la mida n de la llista: ")
+def maxim (llista):
+    max = llista[0]
+    i = 0
+    while i < len(llista):
+        if max < llista[i]:
+            max = llista[i]
+        i += 1
+    return max
+
+print("Introdueix la mida de la llista de nombres aleatoris del 0 al 100: ")
 n = int(input())
-
 llista = generarLlista(n)
-suma = sumarLlista(llista)
-mitjana = mitjanaLlista(suma, n)
-print(llista, "suma:", suma)
-print("mitjana: ", mitjana)
+
+print("Que vols obtenir:\n"
+      "  a (suma)\n"
+      "  b (mitjana)\n"
+      "  c (valor mínim)\n"
+      "  d (valor màxim")
+opcio = input()
+
+if opcio == 'a':
+    print("La suma de la llista ", llista, "es ", sumarLlista(llista))
+
+elif opcio == 'b':
+    print("La mitjana de la llista ", llista, "es", mitjanaLlista(llista, n))
+
+elif opcio == 'c':
+    print("El minim valor de la llista ", llista, "es", minim(llista))
+
+elif opcio == 'd':
+    print("El maxim valor de la llista ", llista, "es", maxim(llista))
+
+else:
+    print("Opcio no valida")
