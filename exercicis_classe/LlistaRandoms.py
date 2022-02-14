@@ -18,7 +18,16 @@ def sumarLlista(llista):
         i += 1
     return suma
 
+def mitjanaLlista (suma, n):
+    return suma/n
 
-llista = generarLlista(5)
+
+print("Aquest programa generarà una llista de n nombre aleatoris i calcularà la seva suma, mitjana, valor màxim i el valor mínim\n"
+      "Introdueix la mida n de la llista: ")
+n = int(input())
+
+llista = generarLlista(n)
 suma = sumarLlista(llista)
+mitjana = mitjanaLlista(suma, n)
 print(llista, "suma:", suma)
+print("mitjana: ", mitjana)
