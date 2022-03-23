@@ -13,7 +13,7 @@ def mitjana(sequence):
     suma = 0
     j = 0
     for j in range(len(sequence)):
-        suma += sequence[i]
+        suma += sequence[j]
     return suma/(j + 1)
 
 def sumatoriIteratiu(sequence):
@@ -31,7 +31,7 @@ def sumatoriRecursiu(sequence, m):
     else:
         return (sequence[0] - m) ** 2 + sumatoriRecursiu(sequence[1:], m)
 
-sequence = [1, 2, 3, 4]
+sequence = [1, 2, 3, 4, 5]
 m = mitjana(sequence)
 print(sumatoriRecursiu(sequence, m))
 print(sumatoriIteratiu(sequence))
