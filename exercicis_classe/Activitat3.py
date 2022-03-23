@@ -11,20 +11,27 @@ def multiplyMatrix(A, B):
 
 def mitjana(sequence):
     suma = 0
-    i = 0
-    for i in range(len(sequence)):
+    j = 0
+    for j in range(len(sequence)):
         suma += sequence[i]
+    return suma/(j + 1)
 
-    return suma/(i+1)
-
-def sumatori(sequence):
-    i = 0
+def sumatoriIteratiu(sequence):
+    j = 0
     suma = 0
     m = mitjana(sequence)
-    while i < len(sequence):
-        suma += pow(sequence[i] - m, 2)
-        i += 1
+    while j < len(sequence):
+        suma += pow(sequence[j] - m, 2)
+        j += 1
     return suma
 
+def sumatoriRecursiu(sequence, m):
+    if len(sequence) == 0:
+        return 0
+    else:
+        return (sequence[0] - m) ** 2 + sumatoriRecursiu(sequence[1:], m)
+
 sequence = [1, 2, 3, 4]
-print(sumatori(sequence))
+m = mitjana(sequence)
+print(sumatoriRecursiu(sequence, m))
+print(sumatoriIteratiu(sequence))
