@@ -2,6 +2,7 @@ import sys
 import matplotlib.pyplot as plt
 from random import sample, choice, shuffle
 
+
 def tableGenerator(number_reserves):
     wing_types = map(lambda x: x + '-Reserva', ['JUAN', 'PEPE', 'MARIA', 'LAIA', 'MONTSE', 'PAULA'])
     L = list(wing_types)
@@ -16,8 +17,8 @@ def tableGenerator(number_reserves):
             yield choice(L), str(position)
         position += 1
 
-def reserveList (number_reserves):
 
+def reserveList(number_reserves):
     reserve_list = [i for i in tableGenerator(number_reserves * 2)]
 
     reserve_list = reserve_list[:number_reserves]
@@ -28,46 +29,63 @@ def reserveList (number_reserves):
 
 
 def bookerineManagement_iterativo(reserves):
+    listReservats = set()
+    for reserva in reserves:
+        listReservats.add(int(reserva[1]))
 
-    idTable = -1
+    for index in range(len(listReservats)):
+        if index not in listReservats:
+            return index
 
-    #Your code here...
+    return index + 1
 
-    return idTable
+
+def bookerineManagement_recursivoAux(reserves, llistaReserves, index=0):
+    # primer bucle recursiva plenar el MAP
+    if len(reserves) > 0:
+        reserva = reserves.pop()
+        llistaReserves.add(int(reserva[1]))
+        return bookerineManagement_recursivoAux(reserves, llistaReserves, index)
+    # segon bucle recursiu buscar la taula més propera
+    if index not in llistaReserves:
+        return index
+    return bookerineManagement_recursivoAux(reserves, llistaReserves, index + 1)
+
 
 def bookerineManagement_recursivo(reserves):
-
-    idTable = -1
-
-    #Your code here...
-
-    return idTable
+    listReservats = set()
+    index = 0
+    return bookerineManagement_recursivoAux(reserves, listReservats, index)
 
 
 def calcular_temps_iterativo():
     import timeit
     temps = []
-    for x in range(0,200,10):
-        temps.append( (x, timeit.timeit("bookerineManagement_iterativo("+str(x)+")",
-            setup="from __main__ import bookerineManagement_iterativo")) )
+    for x in range(1, 200, 10):
+        out_reserves = reserveList(x)
+        reserves = out_reserves[0]
+        temps.append((x, timeit.timeit("bookerineManagement_iterativo(" + str(reserves) + ")",
+                                       setup="from __main__ import bookerineManagement_iterativo")))
     return temps
+
 
 def calcular_temps_recursivo():
     import timeit
     temps = []
-    for x in range(0,200,10):
-        temps.append( (x, timeit.timeit("bookerineManagement_recursivo("+str(x)+")",
-            setup="from __main__ import bookerineManagement_recursivo")) )
+    for x in range(1, 200, 10):
+        out_reserves = reserveList(x)
+        reserves = out_reserves[0]
+        temps.append((x, timeit.timeit("bookerineManagement_recursivo(" + str(reserves) + ")",
+                                       setup="from __main__ import bookerineManagement_recursivo")))
     return temps
 
 
-def crear_grafica( x_list, y_list ):
+def crear_grafica(x_list, y_list):
     plt.scatter(x_list, y_list)
     plt.show()
 
 
-def costEmpiricalComputation ():
-
+def costEmpiricalComputation():
     temps_iterativo = calcular_temps_iterativo()
     crear_grafica(*map(list, zip(*temps_iterativo)))
 
